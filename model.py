@@ -3,9 +3,9 @@ def check_phone_book():
     pb.close()
 
 
-def get_data():
+def get_phone_book():
     with open('phone-book.txt', 'r', encoding='utf-8') as pb:
-        return [i for i in pb.read().splitlines()] if pb else 'Phone-book is empty'
+        return [i for i in pb.read().splitlines()]
 
 
 def add_contact(contact: str):
@@ -16,12 +16,13 @@ def add_contact(contact: str):
 
 
 def find_contact(request: str):
+    contact_list = []
     with open('phone-book.txt', 'r', encoding='utf-8') as pb:
         for i in pb.read().splitlines():
             for j in i.split():
                 if request.lower() == j.lower():
-                    return i
-        return f'Sorry, contact not found'
+                    contact_list.append(i)
+    return contact_list
 
 
 def delete_contact(contact: str):
@@ -31,15 +32,25 @@ def delete_contact(contact: str):
             if i.lower() != contact.lower():
                 pb_list.append(i)
     clear_phone_book()
-    for i in pb_list:
-        add_contact(i)
+    return fill_phone_book(pb_list)
 
 
 def change_contact(old_contact: str, new_contact: str):
-    add_contact(new_contact)
-    delete_contact(old_contact)
+    step_1 = add_contact(new_contact)
+    step_2 = delete_contact(old_contact)
+    return step_1 and step_2
 
 
 def clear_phone_book():
     with open('phone-book.txt', 'w', encoding='utf-8') as pb:
         pb.write('')
+    with open('phone-book.txt', 'r', encoding='utf-8') as pb:
+        return len(pb.readlines()) == 0
+
+
+def fill_phone_book(pb_list: list):
+    with open('phone-book.txt', 'a', encoding='utf-8') as pb:
+        for i in pb_list:
+            pb.write(i + '\n')
+    with open('phone-book.txt', 'r', encoding='utf-8') as pb:
+        return len(pb.readlines()) == len(pb_list)
