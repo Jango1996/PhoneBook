@@ -55,6 +55,7 @@ def confirm_phone_book_clearing(answer: bool):
         print('Произошла ошибка. Справочник не очищен.')
 
 
+
 def ask_contact_data(request: str):
     if request == 'to_delete':
         print('\n' + 'Последовательно введите данные контакта, который хотите удалить. '
