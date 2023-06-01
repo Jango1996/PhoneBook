@@ -67,4 +67,4 @@ def ask_contact_data(request: str):
 
 
 def invalid_command():
-    print('Выберите корректную команду:')
+    print('Выберите корректную команду: ')
